@@ -9,6 +9,6 @@ The purpose of this project is to determine an analytic function from a dataset.
 ## Usage
 Currently the script only works on pkl files storing numpy datasets such that the last column contains the target value.
 ```python
-python ga.py 100 100 test  # prints out best candidate after 100 cycles
+python ga.py 1000 200 test  # prints out best candidate after 200 cycles
 ```
 The two numbers represent the number of individuals to be generated, and the number of cycles, respectively. This particular example should model y = 10(x0)^3 + 4(x1)^2.
