@@ -112,11 +112,11 @@ if __name__=='__main__':
     parser.add_argument('n_individuals', type=int)
     parser.add_argument('n_cycles', type=int)
     parser.add_argument('datapath')
-    parser.add_argument("-cmin", default=-10)
-    parser.add_argument("-cmax", default=10)
-    parser.add_argument("-emin", default=-1)
-    parser.add_argument("-emax", default=5)
-    parser.add_argument("-operators", default=['+','-','*','/'])
+    parser.add_argument("-cmin", type=int, default=-10)
+    parser.add_argument("-cmax", type=int,default=10)
+    parser.add_argument("-emin", type=int,default=-1)
+    parser.add_argument("-emax", type=int,default=5)
+    parser.add_argument("-operators", '--list', type=str, default="+,-,*,/")
     args = parser.parse_args()
 
     f = open(args.datapath, 'rb')
@@ -128,9 +128,11 @@ if __name__=='__main__':
     y = data[:, -1]
     f.close()
 
+    operators = [i for i in args.list.split(',')]
+
     # generate individuals
     individuals = Population.generate_individuals(num_individuals, n_vars, args.cmin, 
-                        args.cmax, args.emin, args.emax, args.operators)
+                        args.cmax, args.emin, args.emax, operators)
 
     d = Population(individuals, x, y)
 
