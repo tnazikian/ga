@@ -21,7 +21,9 @@ class Individual:
         self.fitness = None
         
     def mutate(self, coeffs):
-        """Randomly tweaks either the coefficient or power of one variable"""
+        """
+        Randomly tweaks either the coefficient or power of one variable
+        """
         r = random.random()
         if r <= 0.75:
             c1 = np.random.choice(len(self.coeffs), 1)[0]
@@ -31,8 +33,10 @@ class Individual:
             self.pows[c2] += np.random.choice([-1, 1])
         
     def mate(self, individual):
-        """randomly swaps one chromosome (operator, coefficient and power of one variable)
-         with another individual"""
+        """
+        randomly swaps one chromosome (operator, coefficient and power of one variable)
+        with another individual
+        """
         choice = np.random.randint(low=0, high=len(self.coeffs))
         c_switch = self.coeffs[choice]
         p_switch = self.pows[choice]
