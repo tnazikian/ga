@@ -8,6 +8,6 @@ The purpose of this project is to determine an analytic function from a dataset.
 
 ## Usage
 Currently the script only works on pkl files storing numpy datasets such that the last column contains the target value. 
-'''python
+```python
 python ga.py 100 100 test  # prints out best candidate after 100 cycles
-'''
+```
