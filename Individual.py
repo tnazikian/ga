@@ -1,3 +1,12 @@
+"""
+Toshiki Nazikian 10/7/19
+
+Represents a candidate polynomial function. 
+Representation consists of three numpy arrays: coefficients, 
+powers, and operators such that each variable in the dataset
+is assigned one power and coefficient, and there is one operator 
+between each term of the function.
+"""
 import copy, random
 import numpy as np
 
@@ -12,6 +21,7 @@ class Individual:
         self.fitness = None
         
     def mutate(self, coeffs):
+        """Randomly tweaks either the coefficient or power of one variable"""
         r = random.random()
         if r <= 0.75:
             c1 = np.random.choice(len(self.coeffs), 1)[0]
@@ -21,6 +31,8 @@ class Individual:
             self.pows[c2] += np.random.choice([-1, 1])
         
     def mate(self, individual):
+        """randomly swaps one chromosome (operator, coefficient and power of one variable)
+         with another individual"""
         choice = np.random.randint(low=0, high=len(self.coeffs))
         c_switch = self.coeffs[choice]
         p_switch = self.pows[choice]
@@ -38,6 +50,7 @@ class Individual:
             individual.operators[choice-1] = o_switch
             
     def calc_fitness(self, data, y, error_func='mse'):
+        """Uses mean square error to generate a fitness score"""
         f = 0
         for i in range(len(data)):
             if error_func=='mse':
