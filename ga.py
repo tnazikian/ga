@@ -52,9 +52,16 @@ class Population:
         new_pop = self.new_pop(self.scores)
         # creates deep copies of chosen individuals to make new population
         self.individuals = [individual.get_copy() for individual in new_pop]
-        mate_ind = self.mate()
-        if len(mate_ind) > 0:
-            self.mutate(mate_ind)
+        # If mut_offspring is set to mutate only on offspring
+        mut_offspring=False
+        if mut_offspring:
+            mutate_ind = self.mate()
+        else:
+            # mutate whole population
+            self.mate()
+            mutate_ind = range(self.pop_size)
+        if len(mutate_ind) > 0:
+            self.mutate(mutate_ind)
         self.scores = [individual.calc_fitness(self.data, self.y) 
              for individual in self.individuals]
         current_best_ind = np.where(self.scores == np.max(self.scores))[0][0]
@@ -80,9 +87,9 @@ class Population:
             return mating_ind
         return None
                 
-    def mutate(self, mate_ind):
-        num_to_mutate = int(len(mate_ind)*MUTATE)
-        mutate_ind = np.random.choice(mate_ind, num_to_mutate, replace=False)
+    def mutate(self, mutate_ind):
+        num_to_mutate = int(len(mutate_ind)*MUTATE)
+        mutate_ind = np.random.choice(mutate_ind, num_to_mutate, replace=False)
         if len(mutate_ind) > 0:
             for i in mutate_ind:
                 self.individuals[i].mutate(self.mut_coeffs * 
